@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="800.0" maxWidth="800.0" minHeight="300.0" minWidth="300.0" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.coryrobertson.serverinfoclient.ServerInfoClientController">
+   <children>
+      <Label fx:id="info" layoutX="228.0" layoutY="204.0" text="Label" />
+   </children>
+</AnchorPane>
