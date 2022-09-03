@@ -2,6 +2,7 @@ package com.github.coryrobertson.serverinfoserver;
 
 import com.github.coryrobertson.serverinfo.ServerInfoPacket;
 
+import javax.management.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,7 +14,7 @@ public class ClientHandler extends Thread
 {
     private int id;
     private Socket clientSocket;
-    private final AtomicBoolean serving = new AtomicBoolean(false);
+    private final AtomicBoolean serving = new AtomicBoolean(true);
 
     private ObjectInputStream ois = null;
     private ObjectOutputStream oos = null;
@@ -29,6 +30,11 @@ public class ClientHandler extends Thread
         this.serving.set(false);
     }
 
+    public boolean isConnected()
+    {
+        return serving.get();
+    }
+
     @Override
     public void run()
     {
@@ -40,7 +46,7 @@ public class ClientHandler extends Thread
             {
                 //ois = new ObjectInputStream(clientSocket.getInputStream());
                 oos = new ObjectOutputStream(clientSocket.getOutputStream());
-                oos.writeObject(new ServerInfoPacket(new Date()));
+                oos.writeObject(new ServerInfoPacket(new Date(), ServerInfoServer.getProcessCpuLoad(), ServerInfoServer.getRamUsage(), ServerInfoServer.getTotalSpace(), ServerInfoServer.getFreeSpace()));
                 Thread.sleep(ServerInfoServer.UPDATE_RATE);
             }
             catch (IOException e)
@@ -48,12 +54,11 @@ public class ClientHandler extends Thread
                 System.out.println("Client disconnected: " + this.id + ": " + this.clientSocket.toString());
                 disconnect();
             }
-            catch (InterruptedException e)
+            catch (InterruptedException | ReflectionException | MalformedObjectNameException | InstanceNotFoundException | AttributeNotFoundException | MBeanException e)
             {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
-
-
         }
     }
 }

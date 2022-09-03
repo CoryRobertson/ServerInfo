@@ -28,6 +28,10 @@ public class ServerInfoClientController implements Initializable
      */
     public void updateInfo()
     {
+        if(ServerInfoClientApplication.info == null)
+        {
+            this.info.setText("disconnected...");
+        }
         this.info.setText(ServerInfoClientApplication.info.toString());
 
     }
