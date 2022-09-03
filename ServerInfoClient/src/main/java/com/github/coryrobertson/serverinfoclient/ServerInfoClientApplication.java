@@ -22,7 +22,7 @@ public class ServerInfoClientApplication extends Application
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(ServerInfoClientApplication.class.getResource("ServerInfoClient-View.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 800);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
@@ -31,11 +31,17 @@ public class ServerInfoClientApplication extends Application
 
     }
 
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        dataThread.disconnect();
+    }
+
     public static void main(String[] args)
     {
-        dataThread = new DataRetrievalThread();
-        dataThread.start();
+        //dataThread = new DataRetrievalThread();
+        //dataThread.start();
         launch();
-        dataThread.disconnect();
+        //dataThread.disconnect();
     }
 }

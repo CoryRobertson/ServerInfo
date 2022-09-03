@@ -14,7 +14,7 @@ public class DataRetrievalThread extends Thread
     public static ObjectInputStream ois = null;
     public static ObjectOutputStream oos = null;
 
-
+    private String host;
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -23,9 +23,9 @@ public class DataRetrievalThread extends Thread
         this.running.set(false);
     }
 
-    public DataRetrievalThread()
+    public DataRetrievalThread(String host)
     {
-
+        this.host = host;
     }
 
     @Override
@@ -33,7 +33,6 @@ public class DataRetrievalThread extends Thread
     {
         running.set(true);
         //Socket socket;
-        String host = "localhost";
 
 
         try(Socket socket = new Socket(host, 8123))
