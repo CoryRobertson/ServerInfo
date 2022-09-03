@@ -34,11 +34,8 @@ public class DataRetrievalThread extends Thread
         running.set(true);
         //Socket socket;
 
-
         try(Socket socket = new Socket(host, 8123))
         {
-
-
             while(running.get())
             {
                 //            oos = new ObjectOutputStream(socket.getOutputStream());
