@@ -3,7 +3,7 @@ package com.github.coryrobertson.serverinfo;
 import java.io.Serializable;
 import java.util.Date;
 
-public record ServerInfoPacket(Date date, double CPU_LOAD, long RAM_USAGE, double TOTAL_SPACE, double FREE_SPACE) implements Serializable
+public record ServerInfoPacket(Date date, double CPU_LOAD, long RAM_USAGE, long TOTAL_RAM, double TOTAL_SPACE, double FREE_SPACE) implements Serializable
 {
     public ServerInfoPacket
     {
@@ -25,6 +25,11 @@ public record ServerInfoPacket(Date date, double CPU_LOAD, long RAM_USAGE, doubl
         if(FREE_SPACE < 0)
         {
             throw new IllegalArgumentException("FREE_SPACE can not be negative.");
+        }
+
+        if(TOTAL_RAM < 0)
+        {
+            throw new IllegalArgumentException("TOTAL_RAM can not be negative.");
         }
     }
 }

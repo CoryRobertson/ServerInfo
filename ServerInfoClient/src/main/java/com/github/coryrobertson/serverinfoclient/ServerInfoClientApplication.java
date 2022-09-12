@@ -23,18 +23,20 @@ public class ServerInfoClientApplication extends Application
     {
         FXMLLoader fxmlLoader = new FXMLLoader(ServerInfoClientApplication.class.getResource("ServerInfoClient-View.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 800);
-        stage.setTitle("Hello!");
+        stage.setTitle("ServerInfoClient!");
         stage.setScene(scene);
         stage.show();
 
         //dataThread.disconnect();
-
     }
 
     @Override
     public void stop() throws Exception {
         super.stop();
-        dataThread.disconnect();
+        if(dataThread != null)
+        {
+            dataThread.disconnect();
+        }
     }
 
     public static void main(String[] args)

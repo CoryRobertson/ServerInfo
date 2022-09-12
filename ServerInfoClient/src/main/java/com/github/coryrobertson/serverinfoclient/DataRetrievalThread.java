@@ -23,6 +23,11 @@ public class DataRetrievalThread extends Thread
         this.running.set(false);
     }
 
+    public boolean getRunning()
+    {
+        return this.running.get();
+    }
+
     public DataRetrievalThread(String host)
     {
         this.host = host;

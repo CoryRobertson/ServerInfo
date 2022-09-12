@@ -81,6 +81,12 @@ public class ServerInfoServer {
         return total - free;
     }
 
+    public static long getTotalRam() throws MalformedObjectNameException, ReflectionException, AttributeNotFoundException, InstanceNotFoundException, MBeanException {
+        MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
+        Object attribute = mBeanServer.getAttribute(new ObjectName("java.lang","type","OperatingSystem"), "TotalPhysicalMemorySize");
+        return Long.parseLong(attribute.toString()) / 1024;
+    }
+
     public static double getTotalSpace()
     {
         File root = new File("/");

@@ -46,7 +46,7 @@ public class ClientHandler extends Thread
             {
                 //ois = new ObjectInputStream(clientSocket.getInputStream());
                 oos = new ObjectOutputStream(clientSocket.getOutputStream());
-                oos.writeObject(new ServerInfoPacket(new Date(), ServerInfoServer.getProcessCpuLoad(), ServerInfoServer.getRamUsage(), ServerInfoServer.getTotalSpace(), ServerInfoServer.getFreeSpace()));
+                oos.writeObject(new ServerInfoPacket(new Date(), ServerInfoServer.getProcessCpuLoad(), ServerInfoServer.getRamUsage(),ServerInfoServer.getTotalRam(), ServerInfoServer.getTotalSpace(), ServerInfoServer.getFreeSpace()));
                 Thread.sleep(ServerInfoServer.UPDATE_RATE);
             }
             catch (IOException e)
