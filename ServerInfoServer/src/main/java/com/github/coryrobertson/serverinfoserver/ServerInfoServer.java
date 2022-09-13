@@ -1,5 +1,8 @@
 package com.github.coryrobertson.serverinfoserver;
 
+import com.github.coryrobertson.Logger.LogLevels;
+import com.github.coryrobertson.Logger.Logger;
+
 import javax.management.*;
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +18,15 @@ public class ServerInfoServer {
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         int clientCount = 0;
+        Logger.setLogFileName("log.txt");
+        Logger.setLevel(LogLevels.LOG);
 
-        System.out.println("Waiting on port 8123!");
+        Logger.log("Waiting on port 8123!",LogLevels.LOG);
 
         while(true)
         {
-            System.out.println("Client count: " + clientCount);
+            Logger.log("Client count: " + clientCount,LogLevels.LOG);
+
             try(ServerSocket serverSocket = new ServerSocket(8123))
             {
                 serverSocket.setSoTimeout(3000); // recheck with a timeout of 3 secs
@@ -29,7 +35,7 @@ public class ServerInfoServer {
                     Socket clientSocket = serverSocket.accept();
 
                     if (clientCount <= MAX_CLIENTS) {
-                        System.out.println("Caught client: " + clientCount + ": " + clientSocket.toString());
+                        Logger.log("Caught client: " + clientCount + ": " + clientSocket.toString(),LogLevels.LOG);
 
                         clients.add(new ClientHandler(clientSocket, clientCount));
                         clients.get(clientCount).start();
@@ -42,7 +48,8 @@ public class ServerInfoServer {
                 }
             }
 
-            for (int i = 0; i < clients.size(); i++) {
+            for (int i = 0; i < clients.size(); i++)
+            {
 
                 ClientHandler client = clients.get(i);
 

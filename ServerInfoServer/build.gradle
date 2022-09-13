@@ -1,10 +1,11 @@
 plugins {
     id 'java'
     id 'application'
+    id 'idea'
 }
 
 application {
-    mainClass = "com.github.coryrobertson.Main"
+    mainClass = "com.github.coryrobertson.serverinfoserver.ServerInfoServer"
 }
 
 group 'com.github.coryrobertson'
@@ -12,13 +13,51 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation 'com.github.CoryRobertson:Logger:v1.1'
 }
 
 test {
     useJUnitPlatform()
 }
+
+tasks.withType(Zip){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Tar){
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+clean.doFirst {
+    delete '../log.txt'
+}
+
+
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.github.coryrobertson.serverinfoserver.ServerInfoServer'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+distributions
+        {
+            main
+                    {
+                        contents
+                                {
+                                    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+                                }
+                    }
+        }

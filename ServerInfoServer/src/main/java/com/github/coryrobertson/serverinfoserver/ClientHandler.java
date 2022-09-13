@@ -1,5 +1,7 @@
 package com.github.coryrobertson.serverinfoserver;
 
+import com.github.coryrobertson.Logger.LogLevels;
+import com.github.coryrobertson.Logger.Logger;
 import com.github.coryrobertson.serverinfo.ServerInfoPacket;
 
 import javax.management.*;
@@ -51,12 +53,12 @@ public class ClientHandler extends Thread
             }
             catch (IOException e)
             {
-                System.out.println("Client disconnected: " + this.id + ": " + this.clientSocket.toString());
+                Logger.log("Client disconnected: " + this.id + ": " + this.clientSocket.toString(), LogLevels.LOG);
                 disconnect();
             }
-            catch (InterruptedException | ReflectionException | MalformedObjectNameException | InstanceNotFoundException | AttributeNotFoundException | MBeanException e)
+            catch (IllegalArgumentException | InterruptedException | ReflectionException | MalformedObjectNameException | InstanceNotFoundException | AttributeNotFoundException | MBeanException e)
             {
-                e.printStackTrace();
+                Logger.log(e.toString(), LogLevels.ERROR);
                 throw new RuntimeException(e);
             }
         }
