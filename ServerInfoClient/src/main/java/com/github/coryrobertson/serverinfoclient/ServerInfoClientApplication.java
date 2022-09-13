@@ -22,7 +22,7 @@ public class ServerInfoClientApplication extends Application
     public void start(Stage stage) throws IOException
     {
         FXMLLoader fxmlLoader = new FXMLLoader(ServerInfoClientApplication.class.getResource("ServerInfoClient-View.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 800);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 500);
         stage.setTitle("ServerInfoClient!");
         stage.setScene(scene);
         stage.show();
