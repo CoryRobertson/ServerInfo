@@ -16,6 +16,7 @@ public class DataRetrievalThread extends Thread
     public static ObjectOutputStream oos = null;
 
     private String host;
+    private int port;
 
     private final AtomicBoolean running = new AtomicBoolean(false);
 
@@ -29,9 +30,10 @@ public class DataRetrievalThread extends Thread
         return this.running.get();
     }
 
-    public DataRetrievalThread(String host)
+    public DataRetrievalThread(String host, int port)
     {
         this.host = host;
+        this.port = port;
     }
 
     @Override
@@ -40,9 +42,9 @@ public class DataRetrievalThread extends Thread
         running.set(true);
         //Socket socket;
 
-        try(Socket socket = new Socket(host, 8123))
+        try(Socket socket = new Socket(host, port))
         {
-            PreviousSession previousSession = new PreviousSession(this.host, new Date());
+            PreviousSession previousSession = new PreviousSession(this.host ,this.port ,new Date());
             previousSession.saveToFile();
             while(running.get())
             {

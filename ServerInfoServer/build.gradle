@@ -20,6 +20,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
     implementation 'com.github.CoryRobertson:Logger:v1.1'
+    implementation 'net.sourceforge.argparse4j:argparse4j:0.9.0'
 }
 
 test {

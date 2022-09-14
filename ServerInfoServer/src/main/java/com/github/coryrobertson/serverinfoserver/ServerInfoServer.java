@@ -2,6 +2,10 @@ package com.github.coryrobertson.serverinfoserver;
 
 import com.github.coryrobertson.Logger.LogLevels;
 import com.github.coryrobertson.Logger.Logger;
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
 
 import javax.management.*;
 import java.io.File;
@@ -16,18 +20,40 @@ public class ServerInfoServer {
     private static final int MAX_CLIENTS = 5;
     public static final int UPDATE_RATE = 1000;
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException
+    {
+
+        ArgumentParser parser = ArgumentParsers.newFor("./ServerInfoServer").build()
+                .defaultHelp(true)
+                .description("Starts the server for the ServerInfo program");
+        parser.addArgument("-p")
+                .required(false)
+                .setDefault("8456")
+                .help("The default port for the program to run on.");
+
+        Namespace ns = null;
+
+        try
+        {
+            ns = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
+            System.exit(1);
+        }
+
+        int port = Integer.parseInt( (String) ns.getAttrs().get("p"));
+
         int clientCount = 0;
         Logger.setLogFileName("log.txt");
         Logger.setLevel(LogLevels.LOG);
 
-        Logger.log("Waiting on port 8123!",LogLevels.LOG);
+        Logger.log("Waiting on port " + port + "!",LogLevels.LOG);
 
         while(true)
         {
             Logger.log("Client count: " + clientCount,LogLevels.LOG);
 
-            try(ServerSocket serverSocket = new ServerSocket(8123))
+            try(ServerSocket serverSocket = new ServerSocket(port))
             {
                 serverSocket.setSoTimeout(3000); // recheck with a timeout of 3 secs
                 try

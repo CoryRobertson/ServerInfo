@@ -3,7 +3,7 @@ package com.github.coryrobertson.serverinfoclient;
 import java.io.*;
 import java.util.Date;
 
-public record PreviousSession(String hostname, Date dateLastConnected) implements Serializable {
+public record PreviousSession(String hostname, int port, Date dateLastConnected) implements Serializable {
 
     public PreviousSession
     {

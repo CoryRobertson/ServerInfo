@@ -36,6 +36,9 @@ public class ServerInfoClientController implements Initializable
     private TextField hostName;
 
     @FXML
+    private TextField port;
+
+    @FXML
     private Rectangle connectionDisplayShape;
 
     @FXML
@@ -53,6 +56,7 @@ public class ServerInfoClientController implements Initializable
         if(ServerInfoClientApplication.previousSession != null)
         {
             hostName.setText(ServerInfoClientApplication.previousSession.hostname());
+            port.setText(ServerInfoClientApplication.previousSession.port() + "");
         }
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(ServerInfoClientApplication.UPDATE_RATE), e -> updateInfo()));
         timeline.setCycleCount(Animation.INDEFINITE); // loop forever
@@ -70,7 +74,7 @@ public class ServerInfoClientController implements Initializable
     @FXML
     public void connectButtonPressed()
     {
-        ServerInfoClientApplication.dataThread = new DataRetrievalThread(hostName.getText());
+        ServerInfoClientApplication.dataThread = new DataRetrievalThread(hostName.getText(), Integer.parseInt(port.getText()));
         ServerInfoClientApplication.dataThread.start();
     }
 
