@@ -17,6 +17,8 @@ public class ServerInfoClientApplication extends Application
 
     public static final int UPDATE_RATE = 1000;
 
+    public static PreviousSession previousSession;
+
 
     @Override
     public void start(Stage stage) throws IOException
@@ -41,6 +43,10 @@ public class ServerInfoClientApplication extends Application
 
     public static void main(String[] args)
     {
+        if(PreviousSession.saveFileExists())
+        {
+            previousSession = PreviousSession.loadFromFile();
+        }
         //dataThread = new DataRetrievalThread();
         //dataThread.start();
         launch();

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DataRetrievalThread extends Thread
@@ -41,6 +42,8 @@ public class DataRetrievalThread extends Thread
 
         try(Socket socket = new Socket(host, 8123))
         {
+            PreviousSession previousSession = new PreviousSession(this.host, new Date());
+            previousSession.saveToFile();
             while(running.get())
             {
                 //            oos = new ObjectOutputStream(socket.getOutputStream());
@@ -52,6 +55,7 @@ public class DataRetrievalThread extends Thread
         }
         catch (IOException | ClassNotFoundException e)
         {
+            running.set(false);
             e.printStackTrace();
             throw new RuntimeException(e);
         }

@@ -54,3 +54,7 @@ jlink {
 jlinkZip {
     group = 'distribution'
 }
+
+clean.doFirst {
+    delete 'previousSession.sav'
+}

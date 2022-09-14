@@ -140,3 +140,5 @@ $RECYCLE.BIN/
 *.lnk
 
 /log.txt
+/ServerInfoServer/log.txt
+/ServerInfoClient/previousSession.sav

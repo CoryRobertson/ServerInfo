@@ -34,12 +34,18 @@ public class ServerInfoServer {
                 {
                     Socket clientSocket = serverSocket.accept();
 
-                    if (clientCount <= MAX_CLIENTS) {
+                    if (clientCount < MAX_CLIENTS)
+                    {
                         Logger.log("Caught client: " + clientCount + ": " + clientSocket.toString(),LogLevels.LOG);
 
                         clients.add(new ClientHandler(clientSocket, clientCount));
                         clients.get(clientCount).start();
                         clientCount++;
+                    }
+                    else
+                    {
+                        Logger.log("Client tried to connect but it would exceed the maximum allowed number of clients: " + clientSocket.toString(), LogLevels.WARN);
+                        clientSocket.close();
                     }
                 }
                 catch (SocketTimeoutException ignored)

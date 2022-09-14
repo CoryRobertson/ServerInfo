@@ -50,6 +50,10 @@ public class ServerInfoClientController implements Initializable
     @Override
     public void initialize(URL arg0, ResourceBundle arg1)
     {
+        if(ServerInfoClientApplication.previousSession != null)
+        {
+            hostName.setText(ServerInfoClientApplication.previousSession.hostname());
+        }
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(ServerInfoClientApplication.UPDATE_RATE), e -> updateInfo()));
         timeline.setCycleCount(Animation.INDEFINITE); // loop forever
         timeline.play();
